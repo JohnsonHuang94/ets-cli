@@ -12,10 +12,12 @@
   "dependencies": {
     "chalk": "^5.0.1",
     "commander": "^9.2.0",
+    "download-git-repo": "^3.0.2",
     "fs-extra": "^10.1.0",
     "inquirer": "^8.2.3",
     "path": "^0.12.7",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "util": "^0.12.4"
   },
   "directories": {
     "test": "test"

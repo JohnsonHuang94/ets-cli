@@ -21,6 +21,7 @@ export function waitLoading(fn , msg, ...args) {
     return new Promise( async (resolve, reject) => {
         const spinner = ora(msg) // 加载动画
         spinner.color = 'yellow'
+        console.log(...args)
         try{
             spinner.start()
             const data = await fn(...args)
@@ -28,8 +29,9 @@ export function waitLoading(fn , msg, ...args) {
             resolve(data)
         }catch(err) {
             spinner.fail(`${msg} failed`)
-            // await sleep(1500)
-            // waitLoading(fn, msg, ...arg)
+            await sleep(1500)
+            waitLoading(fn, msg, ...args)
+            reject(err)
         }
     })
 }
