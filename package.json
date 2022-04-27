@@ -1,0 +1,27 @@
+{
+  "name": "ets-cli",
+  "version": "1.0.0",
+  "description": "ets cli",
+  "main": "index.js",
+  "author": "jshuang2",
+  "license": "MIT",
+  "private": false,
+  "bin": {
+    "ets": "bin/ets.js"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "commander": "^9.2.0",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.3",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module"
+}
