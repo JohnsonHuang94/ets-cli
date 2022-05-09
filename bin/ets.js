@@ -21,14 +21,14 @@ program.command('config [value]')
         .option('-a, --all [value]', 'get all config')
         .action((val, cmd) => {
             console.log(val, cmd)
+            // config 命令的相应操作
         })
 
 program.usage('<command> [option]')
         .version(packageJson.version)
 
 program.on('--help', () => {
-    // 运行ku <command> --help 获取命令的详细用法
-    console.log(`Run ${chalk.cyan('ku <command> --help')} for detailed usage of given command`)
+    console.log(`Run ${chalk.cyan('ets <command> --help')} for detailed usage of given command`)
 })
 
 program.parse(process.argv)

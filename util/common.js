@@ -1,10 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
-// import { fileURLToPath } from 'url'
 import ora from 'ora'
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 const __dirname = path.resolve()
 export const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'))
 
@@ -17,21 +14,35 @@ function sleep(time) {
     })
 }
 
-export function waitLoading(fn , msg, ...args) {
+export function waitLoading(msg, download , src, dir) {
     return new Promise( async (resolve, reject) => {
         const spinner = ora(msg) // 加载动画
         spinner.color = 'yellow'
-        console.log(...args)
-        try{
-            spinner.start()
-            const data = await fn(...args)
-            spinner.stop()
-            resolve(data)
-        }catch(err) {
-            spinner.fail(`${msg} failed`)
-            await sleep(1500)
-            waitLoading(fn, msg, ...args)
-            reject(err)
+        spinner.start()
+        let retryTimes = 0;
+        function load(){
+            if(retryTimes > 0){
+                spinner.text = '重试中...'
+            }
+            download(src, dir, async function(err) {
+                if(err){
+                    if(retryTimes < 2){
+                        console.log(+new Date())
+                        spinner.text = '下载失败，即将重试...'
+                        await sleep(1000)
+                        console.log(+new Date())
+                        retryTimes++
+                        load()
+                    }else{
+                        spinner.stop()
+                        reject(err)
+                    }                    
+                }else{
+                    spinner.stop()
+                    resolve('Download Sucess!')
+                }
+            })
         }
+        load()
     })
 }
